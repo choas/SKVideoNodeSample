@@ -19,32 +19,32 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let view = self.view as SKView
+        let view = self.view as! SKView
         
         let scene = SKScene(size: self.view.frame.size)
         view.presentScene(scene)
         
-        let urlStr = NSBundle.mainBundle().pathForResource("sample", ofType: "mp4")
+        let urlStr = Bundle.main.path(forResource: "sample", ofType: "mp4")
         let url = NSURL(fileURLWithPath: urlStr!)
         
-        let asset = AVURLAsset(URL: url, options: nil)
+        let asset = AVURLAsset(url: url as URL, options: nil)
         playerItem = AVPlayerItem(asset: asset)
         player = AVPlayer(playerItem: playerItem)
         
-        videoNode = SKVideoNode(AVPlayer: player)
+        videoNode = SKVideoNode(avPlayer: player!)
         
         // initialize with NSURL
 //        videoNode = SKVideoNode(videoURL: url!)
         
         // initialize with VideoFileName
 //        videoNode = SKVideoNode(videoFileNamed: "sample.mp4")
-        videoNode?.position = CGPointMake(scene.size.width/2, scene.size.height/2)
+        videoNode?.position = CGPoint(x: scene.size.width/2, y: scene.size.height/2)
         
         scene.addChild(videoNode!)
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         videoNode?.play()
     }
